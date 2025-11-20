@@ -1,10 +1,5 @@
 ```markdown
 # GSPB - GNOME Settings & Packages Backups
-
-![GSPB Banner](https://img.shields.io/badge/GSPB-GNOME%20Settings%20%26%20Packages%20Backups-blue?style=for-the-badge)
-![Shell Script](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-
 A comprehensive, colorized backup tool for GNOME desktop settings and multiple package managers across different Linux distributions.
 
 ## ✨ Features
@@ -39,12 +34,6 @@ chmod +x gspb.sh
 sudo mv gspb.sh /usr/local/bin/gspb
 ```
 
-### Manual Installation
-```bash
-git clone https://github.com/stefan-hacks/gspb.git
-cd gspb
-chmod +x gspb.sh
-sudo cp gspb.sh /usr/local/bin/gspb
 ```
 
 ## 📖 Usage
