@@ -96,15 +96,16 @@ backup_gnome() {
 }
 
 backup_native_packages() {
-  local backup_file="${BACKUP_DIR}/${NATIVE_PM}_packages.bak"
+  local backup_file="${BACKUP_DIR}/${NATIVE_PM}_list.bak"
 
   echo "${INFO} ${PACKAGE} Backing up ${NATIVE_PM} packages..."
 
   case $NATIVE_PM in
   "apt")
-    if command -v dpkg-query &>/dev/null; then
-      if dpkg-query -f '${Package}\n' -W >"${backup_file}" 2>/dev/null; then
-        echo "${SUCCESS} ${PACKAGE} APT packages backed up to ${FILE}${backup_file}${RESET}"
+    if command -v apt-mark &>/dev/null; then
+      # Use apt-mark to get manually installed packages for cleaner restoration
+      if apt-mark showmanual | sort >"${backup_file}" 2>/dev/null; then
+        echo "${SUCCESS} ${PACKAGE} APT manually installed packages backed up to ${FILE}${backup_file}${RESET}"
         return 0
       fi
     fi
@@ -152,7 +153,7 @@ backup_native_packages() {
 }
 
 backup_flatpak() {
-  local backup_file="${BACKUP_DIR}/flatpaks_list.bak"
+  local backup_file="${BACKUP_DIR}/flatpak_list.bak"
 
   if ! command -v flatpak &>/dev/null; then
     echo "${WARNING} ${YELLOW}flatpak not found - skipping Flatpak applications backup${RESET}"
@@ -183,7 +184,7 @@ backup_brew() {
   if brew list -1 >"${backup_file}" 2>/dev/null; then
     echo "${SUCCESS} ${PACKAGE} Homebrew packages backed up to ${FILE}${backup_file}${RESET}"
 
-    # Additional Brew bundle dump
+    # Additional Brew bundle dump (keep Brewfile name as is)
     if [ -d "$brewfile_dir" ]; then
       if cd "$brewfile_dir" && rm -f "$brewfile" && brew bundle dump; then
         echo "${SUCCESS} ${PACKAGE} Brew bundle dumped to ${FILE}${brewfile}${RESET}"
@@ -217,7 +218,7 @@ backup_snap() {
 }
 
 backup_cargo() {
-  local backup_file="${BACKUP_DIR}/cargo_packages.bak"
+  local backup_file="${BACKUP_DIR}/cargo_list.bak"
 
   if ! command -v cargo &>/dev/null; then
     echo "${WARNING} ${YELLOW}cargo not found - skipping Cargo/Rust packages backup${RESET}"
@@ -341,6 +342,10 @@ if [[ $ERRORS -eq 0 ]]; then
       echo "  ${FILE} $(basename "$backup_file")"
     fi
   done
+  # Also list Brewfile if it exists
+  if [[ -f "$HOME/dotfiles/backups/Brewfile" ]]; then
+    echo "  ${FILE} Brewfile"
+  fi
 
   exit 0
 else
