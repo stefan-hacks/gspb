@@ -1,15 +1,14 @@
-```markdown
 # GSPB - GNOME Settings & Packages Backups
-A comprehensive, colorized backup tool for GNOME desktop settings and multiple package managers across different Linux distributions.
+A comprehensive, colorized backup tool for GNOME desktop settings and multiple package managers across major Linux distributions.
 
 ## ✨ Features
 
-- 🖥️ **GNOME Settings Backup** - Complete GNOME desktop configuration backup using dconf
-- 📦 **Multi-Package Manager Support** - Automatic detection of native package managers
-- 🎨 **Colorized Output** - Beautiful, easy-to-read terminal output with symbols
-- 🔧 **Cross-Distribution** - Works on Ubuntu, Fedora, Arch, and other major distributions
-- 📁 **Flexible Backup Locations** - Customizable output directories
-- ⚡ **Fast & Lightweight** - Pure bash script with no dependencies
+- 🖥️ **GNOME Settings Backup** – Complete GNOME desktop configuration backup using `dconf`
+- 📦 **Multi-Package Manager Support** – Automatically detects installed native package managers
+- 🎨 **Colorized Output** – Clean and visually appealing terminal output
+- 🔧 **Cross-Distribution Compatibility** – Supports Ubuntu, Fedora, Arch, openSUSE, Gentoo, macOS, and more
+- 📁 **Flexible Backup Locations** – Choose where backups are stored
+- ⚡ **Fast & Lightweight** – Pure Bash script with minimal dependencies
 
 ### Supported Package Managers
 
@@ -25,6 +24,8 @@ A comprehensive, colorized backup tool for GNOME desktop settings and multiple p
 | **Homebrew** | 📦 | Linux/macOS packages |
 | **Cargo** | 🦀 | Rust packages |
 
+---
+
 ## 🚀 Installation
 
 ### Quick Install
@@ -34,16 +35,16 @@ chmod +x gspb.sh
 sudo mv gspb.sh /usr/local/bin/gspb
 ```
 
-```
+---
 
 ## 📖 Usage
 
 ### Basic Usage
 ```bash
-# Backup everything (default behavior)
+# Backup everything (default)
 gspb
 
-# Backup with custom directory
+# Backup to a custom directory
 gspb --output-dir /path/to/backups
 
 # Install backup directory structure
@@ -82,43 +83,46 @@ Options:
   -h, --help            Show help message
 ```
 
+---
+
 ## 🎯 Examples
 
 ### Complete System Backup
 ```bash
 gspb --all
 ```
-*Backs up GNOME settings, native packages, Flatpaks, Snaps, Homebrew, and Cargo packages*
+*Backs up GNOME settings, native packages, Flatpaks, Snaps, Homebrew, and Cargo packages.*
 
-### Development Environment Backup
+### Dev Environment Backup
 ```bash
 gspb --gnome --flatpak --cargo
 ```
-*Perfect for developers - saves desktop settings, Flatpak apps, and Rust tools*
+*Ideal for developers: saves GNOME settings, Flatpak apps, and Rust tools.*
 
 ### Minimal Backup
 ```bash
 gspb --gnome --native
 ```
-*Only essential system settings and packages*
+*Backs up essential system settings and packages.*
+
+---
 
 ## 📊 Output Example
-
-```
+```text
 GSPB - GNOME Settings & Packages Backups
-Starting backup process to: 📁/home/user/backups
+Starting backup process to: 📁 /home/user/backups
 
 ℹ ⚙ Backing up GNOME settings...
-✓ ⚙ GNOME settings backed up to 📄gnome_settings.bak
+✓ ⚙ GNOME settings backed up to 📄 gnome_settings.bak
 
 ℹ 📦 Backing up apt packages...
-✓ 📦 APT packages backed up to 📄apt_packages.bak
+✓ 📦 APT packages backed up to 📄 apt_packages.bak
 
 ℹ 📦 Backing up Flatpak applications...
-✓ 📦 Flatpak applications backed up to 📄flatpaks_list.bak
+✓ 📦 Flatpak applications backed up to 📄 flatpaks_list.bak
 
 ℹ 🦀 Backing up Cargo/Rust packages...
-✓ 🦀 Cargo packages backed up to 📄cargo_packages.bak
+✓ 🦀 Cargo packages backed up to 📄 cargo_packages.bak
 
 ✓ All backups completed successfully!
 ℹ 📁 Backup directory: /home/user/backups
@@ -128,7 +132,9 @@ Starting backup process to: 📁/home/user/backups
   📄 flatpaks_list.bak
   📄 cargo_packages.bak
 ```
+
 ---
+
 ## 🔧 Restoration
 
 ### GNOME Settings
@@ -136,13 +142,13 @@ Starting backup process to: 📁/home/user/backups
 dconf load / < gnome_settings.bak
 ```
 
-### APT Packages (Debian/Ubuntu)
+### APT (Debian/Ubuntu)
 ```bash
 sudo apt update
 xargs -a apt_packages.bak sudo apt install
 ```
 
-### Pacman Packages (Arch)
+### Pacman (Arch)
 ```bash
 xargs -a pacman_packages.bak sudo pacman -S
 ```
@@ -152,15 +158,14 @@ xargs -a pacman_packages.bak sudo pacman -S
 xargs -a flatpaks_list.bak flatpak install
 ```
 
-### Homebrew Packages (NOT RECOMMENDED)
+### Homebrew (Not Recommended)
 ```bash
 xargs -a brew_list.bak brew install
 ```
 
-### (RECOMMENDED OPTION) homebrew also creates A Brewfile
+### Homebrew (Recommended Brewfile)
 ```bash
-```brew bundle install --file $HOME/backups/Brewfile
-```
+brew bundle install --file $HOME/backups/Brewfile
 ```
 
 ### Cargo Packages
@@ -168,49 +173,36 @@ xargs -a brew_list.bak brew install
 xargs -a cargo_packages.bak cargo install
 ```
 
+---
+
 ## 🛠️ Compatibility
 
 | Distribution | Native PM | GNOME | Flatpak | Snap | Cargo |
 |--------------|-----------|-------|---------|------|-------|
-| **Ubuntu** | ✅ APT | ✅ | ✅ | ✅ | ✅ |
-| **Debian** | ✅ APT | ✅ | ✅ | ⚠️ | ✅ |
-| **Fedora** | ✅ DNF | ✅ | ✅ | ✅ | ✅ |
-| **Arch** | ✅ Pacman | ✅ | ✅ | ⚠️ | ✅ |
-| **openSUSE** | ✅ Zypper | ✅ | ✅ | ⚠️ | ✅ |
-| **Gentoo** | ✅ Emerge | ✅ | ✅ | ❌ | ✅ |
-| **macOS** | ✅ Brew | ❌ | ⚠️ | ❌ | ✅ |
+| **Ubuntu**   | ✅ APT    | ✅ | ✅ | ✅ | ✅ |
+| **Debian**   | ✅ APT    | ✅ | ✅ | ⚠️ | ✅ |
+| **Fedora**   | ✅ DNF    | ✅ | ✅ | ✅ | ✅ |
+| **Arch**     | ✅ Pacman | ✅ | ✅ | ⚠️ | ✅ |
+| **openSUSE** | ✅ Zypper| ✅ | ✅ | ⚠️ | ✅ |
+| **Gentoo**   | ✅ Emerge | ✅ | ✅ | ❌ | ✅ |
+| **macOS**    | ✅ Brew  | ❌ | ⚠️ | ❌ | ✅ |
+
+---
 
 ## 🤝 Contributing
-
-We welcome contributions! Please feel free to submit pull requests, report bugs, or suggest new features.
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+4. Push to your branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+---
+
 ## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Troubleshooting
-
-### Common Issues
-
-**"Command not found" errors**
-- Ensure the package manager is installed on your system
-- Some package managers might need additional setup
-
-**Permission denied**
-- Use `sudo` for system-wide package operations during restoration
-- Ensure you have write permissions to the backup directory
-
-**GNOME backup fails**
-- Verify `dconf` is installed: `sudo apt install dconf-tools` (Ubuntu/Debian)
+This project is licensed under the **MIT License**. See the `LICENSE` file for more details.
 
 ---
 
 **Made with ❤️ for the Linux community**
-```
 
