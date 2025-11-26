@@ -119,7 +119,7 @@ backup_native_packages() {
     fi
     ;;
   "dnf" | "yum")
-    if command -v $NATIVE_PM &>/dev/null; then
+    if command -v "$NATIVE_PM" &>/dev/null; then
       if $NATIVE_PM list installed --quiet >"${backup_file}" 2>/dev/null; then
         echo "${SUCCESS} ${PACKAGE} ${NATIVE_PM^^} packages backed up to ${FILE}${backup_file}${RESET}"
         return 0
