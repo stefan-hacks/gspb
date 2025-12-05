@@ -186,7 +186,7 @@ backup_brew() {
 
     # Additional Brew bundle dump (keep Brewfile name as is)
     if [ -d "$brewfile_dir" ]; then
-      if cd "$brewfile_dir" && rm -f "$brewfile" && brew bundle dump; then
+      if cd "$brewfile_dir" && rm -f "$brewfile" && brew bundle dump --describe; then
         echo "${SUCCESS} ${PACKAGE} Brew bundle dumped to ${FILE}${brewfile}${RESET}"
       else
         echo "${WARNING} ${YELLOW}Failed to create Brew bundle${RESET}"
